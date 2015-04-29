@@ -25,6 +25,8 @@ function init() {
   camera.position.z = 20;
 
   getRandomCubesInRadius(100, 1000);
+
+  
 }
 
 /**
