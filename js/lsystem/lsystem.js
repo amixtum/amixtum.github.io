@@ -61,31 +61,60 @@ Represents the initial string of values for the l-system
 */
 function axiom() {
   this.axiomArray = [];
+}
 
-  /**
-  Sets the axiom if it is valid
+/**
+Sets the axiom if it is valid
 
-  @param str The str to set the axiom from
+@param str The str to set the axiom from
 
-  @return True if the axiom was valid and set successfully
-          False otherwise
-  */
-  this.setAxiom = function(str) {
-    for (var i = 0; i < str.length; ++i) {
-      if (str.charAt(i) != ' ') {
-        this.axiomArray.push(str.charAt(i));
-      }
+@return True if the axiom was valid and set successfully
+        False otherwise
+*/
+axiom.prototype.setAxiom = function (str) {
+  for (var i = 0; i < str.length; ++i) {
+    if (str.charAt(i) != ' ') {
+      this.axiomArray.push(str.charAt(i));
     }
-    if (isValidRule(this.axiomArray)) {
-      return true;
-    }
-    else {
-      this.axiomArray = [];
-      return false;
-    }
+  }
+  if (isValidRule(this.axiomArray)) {
+    return true;
+  }
+  else {
+    this.axiomArray = [];
+    return false;
   }
 }
 
-function productionRule() {
-  
+/**
+Represents a production rule in an l-system
+
+@param initialSymbol The symbol that this production rule will expand
+*/
+function productionRule(initialSymbol) {
+  this.initialSymbol = initialSymbol;
+  this.rule = [];
+}
+
+/**
+Creates the production rule from a sring
+
+@param fromString The string to create the production rule from
+
+@return True if fromString represents a valid rule
+        False otherwise
+*/
+productionRule.prototype.setRule(fromString) {
+  for (var i = 0; i < fromString.length; ++i) {
+    if (fromString.charAt(i) != ' ') {
+      this.rule.push(fromString.charAt(i));
+    }
+  }
+  if (isValidRule(this.rule)) {
+    return true;
+  }
+  else {
+    this.rule = [];
+    return false;
+  }
 }
