@@ -16,7 +16,7 @@ Creates the production rule from a string
 @return True if fromString represents a valid rule
         False otherwise
 */
-ProductionRule.prototype.addTransformation(fromString) {
+ProductionRule.prototype.addTransformation = function(fromString) {
   var r = [];  // rule to add
 
   fromString = fromString.trim(); // remove bug-inspiring whitespace
@@ -52,7 +52,7 @@ Applies the rule to a given string
 @return A sequence as a result of applying the production
       rule to the given string
 */
-ProductionRule.prototype.applyRule(toApply) {
+ProductionRule.prototype.applyRule = function(toApply) {
   var newSequence = []; // we will return this
 
   var keys = Object.keys(this.rule); // array of keys representing
@@ -93,7 +93,7 @@ Applies the rules to the given string over n iterations
 @return The sequence obtained by applying the production rule
         n times.
 */
-ProductionRule.prototype.applyRule(toApply, n) {
+ProductionRule.prototype.applyRule = function(toApply, n) {
   var result = toApply; // set the result initially to the given string
 
   for (var i = 0; i < n; ++i) {

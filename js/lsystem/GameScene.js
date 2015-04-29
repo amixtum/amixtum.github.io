@@ -1,4 +1,3 @@
-
 /**
 Initializes the scene, camera, and renderer
 And sets the position of the camera to (0,0,5)
@@ -25,8 +24,6 @@ function init() {
   camera.position.z = 20;
 
   getRandomCubesInRadius(100, 1000);
-
-  
 }
 
 /**
