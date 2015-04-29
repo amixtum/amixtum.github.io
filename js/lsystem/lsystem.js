@@ -9,7 +9,9 @@ alphabet = {rotateLeft: "<", rotateRight: ">",
 
 /**
 Determines the validity of the given symbol
+
 @param sym The symbol to validate
+
 @return True if the symbol is in the alphabet
         False otherwise
 */
@@ -130,29 +132,34 @@ productionRule.prototype.addRule(fromString) {
 Applies the rule to a given string
 
 @param toApply The string to apply the rule to
+
+@return A sequence as a result of applying the production
+      rule to the given string
 */
 productionRule.prototype.applyRules(toApply) {
-  var newSequence = [];
+  var newSequence = []; // we will return this
 
-  var keys = Object.keys(this.rule);
+  var keys = Object.keys(this.rule); // array of keys representing
+                                    // characters to replace
 
-  for (var i = 0; i < toApply.length; ++i) {
-    
+  for (var i = 0; i < toApply.length; ++i) { // iterate through the parameter
+                                            // string
+
     if (toApply.charAt(i) != ' ' &&
-        isValidSymbol(fromString.charAt(i))) {
+        isValidSymbol(fromString.charAt(i))) { // if the character is in the
+                                              // alphabet
 
-        for (var j = 0; j < keys.length; ++j) {
+        for (var j = 0; j < keys.length; ++j) { // look for the corresponding
+                                              // rule for this character
 
-          if (toApply.charAt(j) == keys[j]) {
+          if (toApply.charAt(j) == keys[j]) { // add the result of replacing
+                                            // the character to the result
             newSequence.push(this.rule[j]);
             break;
           }
-
         }
-
     }
-
   }
 
-  return newSequence;
+  return newSequence; // return the result
 }
