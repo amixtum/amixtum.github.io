@@ -89,32 +89,70 @@ axiom.prototype.setAxiom = function (str) {
 /**
 Represents a production rule in an l-system
 
-@param initialSymbol The symbol that this production rule will expand
+The first symbol in a string represents the symbol to replace
+and all other symbols represent the symbols to replace it with
 */
-function productionRule(initialSymbol) {
-  this.initialSymbol = initialSymbol;
-  this.rule = [];
+function productionRule() {
+  this.rule = {};
 }
 
 /**
-Creates the production rule from a sring
+Creates the production rule from a string
 
 @param fromString The string to create the production rule from
 
 @return True if fromString represents a valid rule
         False otherwise
 */
-productionRule.prototype.setRule(fromString) {
-  for (var i = 0; i < fromString.length; ++i) {
-    if (fromString.charAt(i) != ' ') {
-      this.rule.push(fromString.charAt(i));
+productionRule.prototype.addRule(fromString) {
+  var r = [];
+
+  var key = fromString.charAt(0);
+
+  fromString = fromString.trim();
+
+  for (var i = 1; i < fromString.length; ++i) {
+    if (fromString.charAt(i) != ' ' &&
+        isValidSymbol(fromString.charAt(i))) {
+      r.push(fromString.charAt(i));
     }
   }
-  if (isValidRule(this.rule)) {
+  if (isValidRule(r)) {
+    this.rule[key] = r;
     return true;
   }
   else {
-    this.rule = [];
     return false;
   }
+}
+
+/**
+Applies the rule to a given string
+
+@param toApply The string to apply the rule to
+*/
+productionRule.prototype.applyRules(toApply) {
+  var newSequence = [];
+
+  var keys = Object.keys(this.rule);
+
+  for (var i = 0; i < toApply.length; ++i) {
+    
+    if (toApply.charAt(i) != ' ' &&
+        isValidSymbol(fromString.charAt(i))) {
+
+        for (var j = 0; j < keys.length; ++j) {
+
+          if (toApply.charAt(j) == keys[j]) {
+            newSequence.push(this.rule[j]);
+            break;
+          }
+
+        }
+
+    }
+
+  }
+
+  return newSequence;
 }
