@@ -49,9 +49,12 @@ function getRandomCubesInRadius(rad, nGen) {
 
     var newMesh = getCubeMesh();
 
-    newMesh.position.set(Math.cos(randomVerticalAngle) * randomMagnitude,
-                         Math.sin(randomVerticalAngle) * randomMagnitude,
-                         Math.sin(randomHorizontalAngle) * randomMagnitude);
+    newMesh.position.set(Math.cos(randomVerticalAngle) * 
+                         randomMagnitude,
+                         Math.sin(randomVerticalAngle) * 
+                         randomMagnitude,
+                         Math.sin(randomHorizontalAngle) * 
+                         randomMagnitude);
 
     addMeshToScene(newMesh);
   }
