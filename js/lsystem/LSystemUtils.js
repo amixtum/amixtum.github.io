@@ -48,11 +48,11 @@ function isValidRule() {
       return false;
     }
 
-    if (arguments[i] == symbols.savePosition) {
+    if (arguments[i] == alphabet.savePosition) {
       openDelims.push(arguments[i]);
     }
 
-    if (arguments[i] == symbols.returnToPosition) {
+    if (arguments[i] == alphabet.returnToPosition) {
       closeDelims.push(arguments[i]);
     }
   }

@@ -24,16 +24,6 @@ function init() {
   camera.position.z = 20;
 
   getRandomCubesInRadius(100, 1000);
-
-  axiom = "P F";
-  t1 = "P F > F v F P";
-  t2 = "F > F [ P ^ F < F P ] F P";
-  system = new LSystem();
-  system.setAxiom(axiom);
-  system.addTransformation(t1);
-  system.addTransformation(t2);
-  var list = system.applyRule(3);
-  console.log(list);
 }
 
 /**
