@@ -59,7 +59,9 @@ ProductionRule.prototype.applyRule = function(toApply) {
 
           if (toApply.charAt(i) == keys[j]) { // add the result of replacing
                                             // the character to the result
-            newSequence.push(this.rule[keys[j]]);
+            for (var k = 0; k < this.rule[keys[j]].length; ++k) {
+              newSequence.push(this.rule[keys[j]][k]);
+            }
             foundTransform = true;
             break;
           }
