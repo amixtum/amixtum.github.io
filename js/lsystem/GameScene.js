@@ -45,6 +45,11 @@ function init() {
   
   // hopefully it works
   turtleInterpreter.executeSequence(sequence, scene, getCubeMesh);
+  
+  initializeMovementValues();
+  
+  document.onkeydown = keyDownHandler;
+  document.onkeyup = keyUpHandler;
 }
 
 /**
@@ -52,6 +57,7 @@ Renders the scene created in init() [see init()]
 */
 function render() {
   requestAnimationFrame(render);
+  handleInput();
   renderer.render(scene, camera);
 }
 
@@ -79,6 +85,18 @@ function getRandomCubesInRadius(rad, nGen) {
 
     addMeshToScene(newMesh);
   }
+}
+
+function getCamera() {
+  return camera;
+}
+
+function getScene() {
+  return scene;
+}
+
+function getRenderer() {
+  return renderer;
 }
 
 /**
