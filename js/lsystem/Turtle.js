@@ -13,7 +13,7 @@ Turtle.prototype.moveForward = function () {
 	rotateMatrix.extractRotation(this.turtle.matrix);
 	
 	var forward = new THREE.Vector3(0, 0, 1);
-	forward = rotateMatrix.multiplyVector3(forward);
+	forward.applyMatrix4(rotateMatrix);
 	
 	this.turtle.translateOnAxis(forward, this.forwardDistance);
 }
@@ -42,7 +42,7 @@ Turtle.prototype.turn = function (direction) {
 			break;
 	}
 	
-	axis = rotationMatrix.multiplyVector3(axis);
+	axis.applyMatrix4(rotationMatrix);
 	
 	this.turtle.rotateOnAxis(axis, this.turnAngle);
 }
@@ -64,5 +64,31 @@ Turtle.prototype.returnToSavedPosition = function() {
 
 Turtle.prototype.placeObject = function(scn, mesh) {
 	mesh.position.copy(this.turtle.position);
+	//console.log(mesh.position);
 	scn.add(mesh);
+}
+
+Turtle.prototype.executeSequence = function(sequence, scn, meshGen) {
+	for (var i = 0; i < sequence.length; ++i) {
+		switch (sequence[i]) {
+			case "^":
+				this.turn("^");
+				break;
+			case "v":
+				this.turn("v");
+				break;
+			case "<":
+				this.turn("<");
+				break;
+			case ">":
+				this.turn(">");
+				break;
+			case "F":
+				this.moveForward();
+				break;
+			case "P":
+				this.placeObject(scn, meshGen());
+				break;
+		}
+	}
 }

@@ -23,7 +23,28 @@ function init() {
 
   camera.position.z = 20;
 
-  getRandomCubesInRadius(100, 1000);
+  //getRandomCubesInRadius(100, 1000);
+  
+  // Set up the l-system
+  var sys = new LSystem();
+  var axiom = "F P > F P";
+  var t1 = "F ^ F > F P [ v F P ] ^ F P";
+  var t2 = "P < F v P [ v F F > > F ] P F P";
+  sys.setAxiom(axiom);
+  sys.addTransformation(t1);
+  sys.addTransformation(t2);
+  var sequence = sys.applyRule(4);
+  
+  //console.log(sequence);
+  
+  // Create the turtle interpreter
+  var turtleObj = new THREE.Object3D();
+  var distance = 1;
+  var angle = Math.PI / 4;
+  var turtleInterpreter = new Turtle(turtleObj, distance, angle);
+  
+  // hopefully it works
+  turtleInterpreter.executeSequence(sequence, scene, getCubeMesh);
 }
 
 /**
