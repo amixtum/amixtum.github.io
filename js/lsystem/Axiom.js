@@ -19,15 +19,8 @@ Axiom.prototype.setAxiom = function (str) {
       this.axiomArray.push(str.charAt(i));
     }
   }
-  if (isValidRule(this.axiomArray)) {
-    return true;
-  }
-  else {
-    this.axiomArray = [];
-    return false;
-  }
 }
 
 Axiom.prototype.asString = function() {
-  return this.axiomArray.toString();
+  return this.axiomArray.toString().replace(/,/g, " ");
 }

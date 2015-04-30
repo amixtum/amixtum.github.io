@@ -12,9 +12,6 @@ function ProductionRule() {
 Creates the production rule from a string
 
 @param fromString The string to create the production rule from
-
-@return True if fromString represents a valid rule
-        False otherwise
 */
 ProductionRule.prototype.addTransformation = function(fromString) {
   var r = [];  // rule to add
@@ -33,15 +30,7 @@ ProductionRule.prototype.addTransformation = function(fromString) {
     }
 
   }
-
-  if (isValidRule(r)) { // add the transformation if it is valid and return true
     this.rule[key] = r;
-    return true;
-  }
-
-  else {
-    return false; // return false if the rule is invalild
-  }
 }
 
 /**
@@ -53,6 +42,7 @@ Applies the rule to a given string
       rule to the given string
 */
 ProductionRule.prototype.applyRule = function(toApply) {
+
   var newSequence = []; // we will return this
 
   var keys = Object.keys(this.rule); // array of keys representing
@@ -61,19 +51,23 @@ ProductionRule.prototype.applyRule = function(toApply) {
   for (var i = 0; i < toApply.length; ++i) { // iterate through the parameter
                                             // string
 
-    if (toApply.charAt(i) != ' ' &&
-        isValidSymbol(fromString.charAt(i))) { // if the character is in the
-                                              // alphabet
-
+    if (toApply.charAt(i) != ' ') { // if the character is not
+                                  // a delimiter
+        var foundTransform = false;
         for (var j = 0; j < keys.length; ++j) { // look for the corresponding
                                               // rule for this character
 
-          if (toApply.charAt(j) == keys[j]) { // add the result of replacing
+          if (toApply.charAt(i) == keys[j]) { // add the result of replacing
                                             // the character to the result
-            newSequence.push(this.rule[j]);
+            newSequence.push(this.rule[keys[j]]);
+            foundTransform = true;
             break;
           }
 
+        }
+
+        if (!foundTransform) {
+          newSequence.push(toApply.charAt(i));
         }
 
     }
@@ -93,11 +87,11 @@ Applies the rules to the given string over n iterations
 @return The sequence obtained by applying the production rule
         n times.
 */
-ProductionRule.prototype.applyRule = function(toApply, n) {
-  var result = toApply; // set the result initially to the given string
+ProductionRule.prototype.applyRuleN = function(toApply, n) {
+  var result = this.applyRule(toApply); // set the result initially to the given string
 
-  for (var i = 0; i < n; ++i) {
-    result = this.applyRule(result); // apply the result of the rule n times
+  for (var i = 1; i < n; ++i) {
+    result = this.applyRule(result.toString().replace(/,/g, " "));
   }
 
   return result; // return the result

@@ -24,7 +24,7 @@ function isValidSymbol(sym) {
     case "F":
     case "[":
     case "]":
-    case "p":
+    case "P":
       return true;
     default:
       return false;
@@ -44,6 +44,7 @@ function isValidRule() {
 
   for (var i = 0; i < arguments.length; ++i) {
     if (!isValidSymbol(arguments[i])) {
+      console.log("found invalid symbol in isValidRule()" + arguments[i]);
       return false;
     }
 
@@ -55,6 +56,8 @@ function isValidRule() {
       closeDelims.push(arguments[i]);
     }
   }
+
+  console.log("Is valid rule returned" + ((closeDelims.length == openDelims.length) && (arguments.length != 0)))
 
   return (closeDelims.length == openDelims.length) && (arguments.length != 0);
 }
