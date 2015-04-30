@@ -1,11 +1,9 @@
-function Turtle(turtle, forwardDistance, turnAngle, mesh) {
+function Turtle(turtle, forwardDistance, turnAngle) {
 	this.turtle = turtle;
 	
 	this.forwardDistance = forwardDistance;
 	
 	this.turnAngle = turnAngle;
-	
-	this.mesh = mesh;
 	
 	this.savedPositions = [];
 }
@@ -64,6 +62,7 @@ Turtle.prototype.returnToSavedPosition = function() {
 	}
 }
 
-Turtle.prototype.placeObject = function() {
-	
+Turtle.prototype.placeObject = function(scn, mesh) {
+	mesh.position.copy(this.turtle.position);
+	scn.add(mesh);
 }
