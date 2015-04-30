@@ -12,9 +12,12 @@
 		<script src="js/lsystem/Axiom.js"></script>
 		<script src="js/lsystem/ProductionRule.js"></script>
 		<script src="js/lsystem/LSys.js"></script>
+		<script src="js/lsystem/CameraController.js"></script>
     	<script src="js/lsystem/GameScene.js"></script>
 		<script src="js/lsystem/Turtle.js"></script>
 		<script>
+			document.addEventListener("keydown", cameraMover);
+			
 			init();
 			render();
 		</script>
