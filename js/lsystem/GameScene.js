@@ -21,15 +21,15 @@ function init() {
 
   scene.add(light);
 
-  camera.position.z = 20;
+  camera.position.z = 80;
 
   //getRandomCubesInRadius(100, 1000);
   
   // Set up the l-system
   var sys = new LSystem();
-  var axiom = "F P > F P";
-  var t1 = "F ^ F > F P [ v F P ] ^ F P";
-  var t2 = "P < F v P [ v F F > > F ] P F P";
+  var axiom = "F P F F P";
+  var t1 = "F > F [ P v v F P ] < < ^ F P";
+  var t2 = "P P F [ < F P > F] P";
   sys.setAxiom(axiom);
   sys.addTransformation(t1);
   sys.addTransformation(t2);
