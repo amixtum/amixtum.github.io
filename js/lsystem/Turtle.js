@@ -15,14 +15,14 @@ Turtle.prototype.moveForward = function () {
 Turtle.prototype.turn = function (direction) {
 	var axis = new THREE.Vector3();
 	var mat = new THREE.Matrix4();
-	mat.extractRotation(this.turtle.matrix);
+	mat.extractRotation(this.turtle.matrixWorld);
 	
 	switch (direction) {
 		case "<":
-			axis.set(0, 0, 1);
+			axis.set(0, 1, 0);
 			break;
 		case ">":
-			axis.set(0, 0, -1);
+			axis.set(0, -1, 0);
 			break;
 		case "^":
 			axis.set(1, 0, 0);
@@ -30,9 +30,11 @@ Turtle.prototype.turn = function (direction) {
 		case "v":
 			axis.set(-1, 0, 0);
 			break;
+		default:
+			break;
 	}
 	
-	axis.applyMatrix4(mat);
+	axis.transformDirection(mat);
 	
 	this.turtle.rotateOnAxis(axis, this.turnAngle);
 }

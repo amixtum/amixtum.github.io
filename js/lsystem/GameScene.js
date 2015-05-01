@@ -28,12 +28,12 @@ function init() {
   // Set up the l-system
   var sys = new LSystem();
   var axiom = "F";
-  var t1 = "F > > F ^ ^ F P";
-  var t2 = "P < < F v v F";
+  var t1 = "F > F [ > F [ < < F ] ^ ^ < < ] < F";
+  //var t2 = "P";
   sys.setAxiom(axiom);
   sys.addTransformation(t1);
-  sys.addTransformation(t2);
-  var sequence = sys.applyRule(4);
+  //sys.addTransformation(t2);
+  var sequence = sys.applyRule(5);
   
   console.log(sequence);
   
