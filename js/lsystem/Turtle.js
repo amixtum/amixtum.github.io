@@ -9,52 +9,42 @@ function Turtle(turtle, forwardDistance, turnAngle) {
 }
 
 Turtle.prototype.moveForward = function () {
-	var rotateMatrix = new THREE.Matrix4();
-	rotateMatrix.extractRotation(this.turtle.matrix);
-	
-	var forward = new THREE.Vector3(0, 0, 1);
-	forward.applyMatrix4(rotateMatrix);
-	
-	this.turtle.translateOnAxis(forward, this.forwardDistance);
+	this.turtle.translateZ(this.forwardDistance);
 }
 
 Turtle.prototype.turn = function (direction) {
-	var rotationMatrix = new THREE.Matrix4();
-	rotationMatrix.extractRotation(this.turtle.matrix);
-	
 	var axis = new THREE.Vector3();
+	var mat = new THREE.Matrix4();
+	mat.extractRotation(this.turtle.matrix);
 	
 	switch (direction) {
+		case "<":
+			axis.set(0, 0, 1);
+			break;
+		case ">":
+			axis.set(0, 0, -1);
+			break;
 		case "^":
 			axis.set(1, 0, 0);
 			break;
 		case "v":
 			axis.set(-1, 0, 0);
 			break;
-		case "<":
-			axis.set(0, 1, 0);
-			break;
-		case ">":
-			axis.set(0, -1, 0);
-			break;
-		default:
-			console.log("Invalid Direction");
-			break;
 	}
 	
-	axis.applyMatrix4(rotationMatrix);
+	axis.applyMatrix4(mat);
 	
 	this.turtle.rotateOnAxis(axis, this.turnAngle);
 }
 
 Turtle.prototype.savePosition = function () {
 	var position = this.turtle.position;
-	savedPositions.push(position);
+	this.savedPositions.push(position);
 }
 
 Turtle.prototype.returnToSavedPosition = function() {
-	if (savedPositions.length < 0) {
-		this.turtle.position.copy(savedPositions.pop());
+	if (this.savedPositions.length < 0) {
+		this.turtle.position.copy(this.savedPositions.pop());
 	}
 	else {
 		console.log("trying to return to a postition that"
@@ -64,7 +54,7 @@ Turtle.prototype.returnToSavedPosition = function() {
 
 Turtle.prototype.placeObject = function(scn, mesh) {
 	mesh.position.copy(this.turtle.position);
-	//console.log(mesh.position);
+	//console.log("[" + mesh.position.x + ", " + mesh.position.y + ", " + mesh.position.z + "]");
 	scn.add(mesh);
 }
 
@@ -85,6 +75,7 @@ Turtle.prototype.executeSequence = function(sequence, scn, meshGen) {
 				break;
 			case "F":
 				this.moveForward();
+				this.placeObject(scn, meshGen());
 				break;
 			case "P":
 				this.placeObject(scn, meshGen());

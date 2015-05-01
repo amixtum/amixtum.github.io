@@ -9,7 +9,7 @@ var s = 83;
 var d = 68;
 
 var translateDistance = 1;
-var rotateDistance = 0.01;
+var rotateDistance = 0.05;
 
 var movingForward;
 var movingBack;
@@ -36,29 +36,32 @@ function initializeMovementValues() {
 function translateCamera(direction, distance) {
 	var translateMatrix = new THREE.Matrix4();
 	
-	var up = new THREE.Vector3();
-	var right = new THREE.Vector3();
-	var forward = new THREE.Vector3();
+	var upV = new THREE.Vector3();
+	var rightV = new THREE.Vector3();
+	var forwardV = new THREE.Vector3();
 	
-	getCamera().matrix.extractBasis(right, up, forward);
+	getCamera().matrix.extractBasis(rightV, upV, forwardV);
 	
 	if (direction == a) {
-		translateMatrix.makeTranslation(-right.x, 0, -right.z);
+		translateMatrix.makeTranslation(-rightV.x * distance, 
+										-rightV.y * distance, 
+										-rightV.z * distance);
 	}
 	if (direction == s) {
-		translateMatrix.makeTranslation(forward.x, 0, forward.z); 
+		translateMatrix.makeTranslation(forwardV.x, forwardV.y, forwardV.z); 
 	}
 	if (direction == w) {
-		translateMatrix.makeTranslation(-forward.x, 0, -forward.z);
+		translateMatrix.makeTranslation(-forwardV.x, -forwardV.y, -forwardV.z);
 	}
 	if (direction == d) {
-		translateMatrix.makeTranslation(right.x, 0, right.z);
+		translateMatrix.makeTranslation(rightV.x, rightV.y, rightV.z);
 	}
 	if (direction == up) {
-		translateMatrix.makeTranslation(0, up.y, 0);
+		console.log("up happened");
+		translateMatrix.makeTranslation(upV.x, upV.y, upV.z);
 	}
 	if (direction == down) {
-		translateMatrix.makeTranslation(0, -up.y, 0);
+		translateMatrix.makeTranslation(-upV.x, -upV.y, -upV.z);
 	}
 	
 	getCamera().applyMatrix(translateMatrix);
@@ -77,7 +80,7 @@ function rotateCamera(direction, distance) {
 
 function handleInput() {
 	if (movingForward) {
-		console.log("should move forward");
+		//console.log("should move forward");
 		translateCamera(w, translateDistance);
 	}
 	if (movingBack) {
@@ -104,7 +107,7 @@ function handleInput() {
 }
 
 function keyDownHandler(event) {
-	console.log("in key down handler");
+	console.log(event.keyCode);
 	
 	//console.log(event.charCode);
 	
